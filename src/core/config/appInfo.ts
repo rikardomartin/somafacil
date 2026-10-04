@@ -6,4 +6,5 @@ export const AppInfo = {
   proPrice: 10.0,
   proPriceFormatted: 'R$ 10,00',
   trialDurationDays: 30,
+  isFreeEdition: true, // Versão Gratuita e Ilimitada (sem paywall, sem trial, sem bloqueio)
 } as const;

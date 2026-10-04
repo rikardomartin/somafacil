@@ -17,6 +17,16 @@ export class ProService {
   }
 
   getProState(): ProState {
+    if (AppInfo.isFreeEdition) {
+      return {
+        isPro: true,
+        isTrialActive: false,
+        trialDaysRemaining: 0,
+        isLoading: false,
+        hasAccess: true,
+      };
+    }
+
     const isPro = localStorage.getItem(PRO_STATUS_KEY) === 'true';
     let trialStartRaw = localStorage.getItem(TRIAL_START_KEY);
 
@@ -42,6 +52,9 @@ export class ProService {
   }
 
   async checkRemoteProStatus(): Promise<boolean> {
+    if (AppInfo.isFreeEdition) {
+      return true;
+    }
     const deviceId = this.getDeviceId();
     try {
       const response = await fetch(`${API_BASE_URL}/status?device_id=${encodeURIComponent(deviceId)}`, {

@@ -191,7 +191,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </div>
                 {isPro ? (
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-500 text-white font-bold text-xs">
-                    PRO Vitalício Ativo
+                    {AppInfo.isFreeEdition ? 'Gratuito Ilimitado' : 'PRO Vitalício Ativo'}
                   </span>
                 ) : (
                   <button
@@ -268,26 +268,28 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={onResetTrial}
-                  title="Reiniciar período de teste"
-                  className="text-[10px] underline hover:text-[#FF4D57] flex items-center gap-0.5"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  Reiniciar teste
-                </button>
-                <span>•</span>
-                <button
-                  type="button"
-                  onClick={onExpireTrial}
-                  title="Simular período encerrado"
-                  className="text-[10px] underline hover:text-[#FF4D57]"
-                >
-                  Expirar teste
-                </button>
-              </div>
+              {!AppInfo.isFreeEdition && (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={onResetTrial}
+                    title="Reiniciar período de teste"
+                    className="text-[10px] underline hover:text-[#FF4D57] flex items-center gap-0.5"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Reiniciar teste
+                  </button>
+                  <span>•</span>
+                  <button
+                    type="button"
+                    onClick={onExpireTrial}
+                    title="Simular período encerrado"
+                    className="text-[10px] underline hover:text-[#FF4D57]"
+                  >
+                    Expirar teste
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>

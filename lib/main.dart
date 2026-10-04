@@ -4,7 +4,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // Tela cheia no Android
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -45,8 +44,6 @@ class _SomaFacilWebViewState extends State<SomaFacilWebView> {
   late final WebViewController _controller;
   bool _isLoading = true;
 
-  static const String _appUrl = 'https://calculadora-pro-ten.vercel.app';
-
   @override
   void initState() {
     super.initState();
@@ -56,13 +53,19 @@ class _SomaFacilWebViewState extends State<SomaFacilWebView> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (_) => setState(() => _isLoading = true),
-          onPageFinished: (_) => setState(() => _isLoading = false),
+          onPageFinished: (_) {
+            setState(() => _isLoading = false);
+            // Garante que o modo gratuito ilimitado esteja ativo permanentemente
+            _controller.runJavaScript(
+              "try { localStorage.setItem('pro_status_v1', 'true'); localStorage.setItem('edition', 'free'); } catch(e) {}",
+            );
+          },
           onWebResourceError: (error) {
             debugPrint('WebView error: ${error.description}');
           },
         ),
       )
-      ..loadRequest(Uri.parse(_appUrl));
+      ..loadFlutterAsset('assets/web/index.html');
   }
 
   @override

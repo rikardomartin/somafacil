@@ -72,7 +72,7 @@ export const Header: React.FC<HeaderProps> = ({
         {isPro && (
           <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-black tracking-wide">
             <Sparkles className="w-3 h-3" />
-            PRO
+            {AppInfo.isFreeEdition ? 'GRÁTIS' : 'PRO'}
           </span>
         )}
 

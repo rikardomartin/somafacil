@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ProState } from '../types';
 import { proService } from '../services/proService';
+import { AppInfo } from '../core/config/appInfo';
 
 export function usePro() {
   const [proState, setProState] = useState<ProState>(() => proService.getProState());
-  const [isProLoading, setIsProLoading] = useState(true);
+  const [isProLoading, setIsProLoading] = useState(() => !AppInfo.isFreeEdition);
 
   const refresh = useCallback(() => {
     setProState(proService.getProState());
